@@ -1,0 +1,31 @@
+{
+  "name": "express-ecommerce",
+  "version": "0.0.1",
+  "description": "Simple e-commerce example implementation in express and nodejs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "e-commerce",
+    "express",
+    "nodejs"
+  ],
+  "author": "Alex Xandra Albert Sim <bertzzie@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^0.8.3",
+    "body-parser": "^1.13.1",
+    "connect-flash": "^0.1.1",
+    "express": "^4.12.4",
+    "express-session": "^1.11.3",
+    "jade": "^1.11.0",
+    "mysql": "^2.7.0",
+    "passport": "^0.2.2",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-live-server": "0.0.20"
+  }
+}
