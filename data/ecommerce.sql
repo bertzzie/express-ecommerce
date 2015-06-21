@@ -103,3 +103,6 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`cartproducts` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- Default Admin User
+INSERT INTO users (username, password, type) VALUES ('admin@mail.com’, '$2a$10$d8yU515yNMaZxHJVJM1tpOW8Sz2xqe0h3ZKmkWH7/PsnHtJFeWf/W', 1);

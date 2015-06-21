@@ -4,11 +4,11 @@ var LocalStrategy = require("passport-local").Strategy,
 
 module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, {id: user.id, type: user.type});
     });
 
-    passport.deserializeUser(function (id, done) {
-        db.GetUserByID(id, function (err, results) {
+    passport.deserializeUser(function (user, done) {
+        db.GetUserByID(user.id, function (err, results) {
             done(err, results[0]);
         });
     });
