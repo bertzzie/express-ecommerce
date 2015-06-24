@@ -57,13 +57,16 @@ router.post("/create", MustLoginMW, function (req, res) {
         });
 
         ws.on("error", function (err) {
+            console.log(err);
             req.flash("error", "Product addition failed!");
             res.redirect("/product/create");
-            console.log(err);
         });
-        rs.pipe(ws);
 
-        db.CreateProduct(product, make_CreateProduct(req, res));
+        ws.on("close", function (ex) {
+            db.CreateProduct(product, make_CreateProduct(req, res));
+        });
+
+        rs.pipe(ws);
     });
 });
 
