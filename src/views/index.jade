@@ -14,6 +14,7 @@ html
                 ul.horizontal-menu
                     li.menu-item: a(href="/about") About
                     if loggedin
+                        include login-menu.jade
                         li.menu-item: a(href="/auth/logout") Logout
                     else
                         li.menu-item: a(href="/auth/login") Login

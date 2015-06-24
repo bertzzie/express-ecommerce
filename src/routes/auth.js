@@ -95,5 +95,12 @@ function JadeLoggedinMiddleware(req, res, next) {
     next();
 };
 
+function JadeUserMiddleware(req, res, next) {
+    res.locals.user = req.user || {};
+
+    next();
+};
+
 exports.router = router;
 exports.JadeLoggedinMiddleware = JadeLoggedinMiddleware;
+exports.JadeUserMiddleware     = JadeUserMiddleware;

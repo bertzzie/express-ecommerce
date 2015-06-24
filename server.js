@@ -24,8 +24,10 @@ require("./src/models/passport")(passport);
 app.set("view engine", "jade");
 app.set("views", "./src/views");
 
-var JadeLoggedinMiddleware = auth.JadeLoggedinMiddleware;
+var JadeLoggedinMiddleware = auth.JadeLoggedinMiddleware,
+    JadeUserMiddleware     = auth.JadeUserMiddleware;
 app.use("*", JadeLoggedinMiddleware);
+app.use("*", JadeUserMiddleware);
 
 app.get("/", function (req, res) {
     var message = req.flash("success");

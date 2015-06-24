@@ -4,7 +4,15 @@ var express    = require("express"),
     fs         = require("fs"),
     db         = require("../models/database");
 
-var PICT_DIR = "./src/static/product/";
+var PICT_DIR = "/static/product/";
+
+router.get("/list", function (req, res) {
+    db.GetProductList(10, function (err, results) {
+        res.render("product/list", {
+            products: results
+        });
+    });
+});
 
 router.get("/create", function (req, res) {
     var success = req.flash("success");
@@ -33,7 +41,7 @@ router.post("/create", function (req, res) {
             "description": desc,
             "quantity": qty,
             "price": price,
-            "picture": ppath
+            "picture": PICT_DIR + pict[0]["originalFilename"]
         };
 
 

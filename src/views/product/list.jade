@@ -1,0 +1,25 @@
+extends ../index.jade
+
+block moreStyle
+    link(rel="stylesheet", href="/static/styles/tables.css")
+
+block content
+    table
+        thead
+            tr
+                th ID
+                th Name
+                th Description
+                th Quantity
+                th Price
+                th Picture
+         tbody
+             each product in products
+                 tr
+                     td= product.id
+                     td= product.name
+                     td= product.description
+                     td= product.quantity
+                     td= product.price
+                     td 
+                         img(src="#{product.picture}")

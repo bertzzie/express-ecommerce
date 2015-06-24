@@ -51,6 +51,13 @@ exports.CreateProduct = function (product, callback) {
                   callback);
 };
 
+exports.GetProductList = function (count, callback) {
+    var query = "SELECT * FROM products LIMIT ?",
+        limit = count > 0? count: 1;
+
+    queryDatabase(query, [limit], callback);
+};
+
 function queryDatabase(query, data, callback) {
     pool.getConnection(function (poolError, connection) {
         if (poolError) {

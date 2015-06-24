@@ -1,0 +1,26 @@
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead tr {
+    background: rgba(64, 64, 256, 0.4);
+    color: rgba(64, 64, 255, 1);
+}
+
+thead th {
+    height: 64px;
+}
+
+th, td {
+    border: 1px solid #333;
+    height: 128px;
+    width: 256px;
+    padding: 5px;
+    text-align: center;
+}
+
+td img {
+    max-height: 100%;
+    max-width: 100%;
+}

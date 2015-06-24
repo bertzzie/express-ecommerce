@@ -1,0 +1,9 @@
+li.menu-item: a(href="/cart") Cart
+case user.type
+    when 1
+        li.menu-item: a(href="/product/create") New Product
+        li.menu-item: a(href="/product/list") Product List
+    when 2
+        li.menu-item: a(href="/payment") Payment
+    when 3
+        li.menu-item: a(href="/product/list") Product List
