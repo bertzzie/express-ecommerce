@@ -1,12 +1,14 @@
-var express    = require("express"),
-    router     = express.Router(),
-    multiparty = require("multiparty"),
-    fs         = require("fs"),
-    db         = require("../models/database");
+var express     = require("express"),
+    router      = express.Router(),
+    multiparty  = require("multiparty"),
+    fs          = require("fs"),
+    db          = require("../models/database"),
+    auth        = require("./auth.js"),
+    MustLoginMW = auth.MustLoggedinMiddleware;
 
 var PICT_DIR = "/static/product/";
 
-router.get("/list", function (req, res) {
+router.get("/list", MustLoginMW, function (req, res) {
     db.GetProductList(10, function (err, results) {
         res.render("product/list", {
             products: results
@@ -14,7 +16,7 @@ router.get("/list", function (req, res) {
     });
 });
 
-router.get("/create", function (req, res) {
+router.get("/create", MustLoginMW, function (req, res) {
     var success = req.flash("success");
     if (success.length > 0) {
         res.render("product/create", {
@@ -25,7 +27,7 @@ router.get("/create", function (req, res) {
     }
 });
 
-router.post("/create", function (req, res) {
+router.post("/create", MustLoginMW, function (req, res) {
     var form = new multiparty.Form();
 
     form.parse(req, function (err, fields, files) {

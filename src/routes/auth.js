@@ -89,6 +89,14 @@ function make_CreateUser_Register(req, res) {
     };
 };
 
+function MustLoggedinMiddleware(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+
+    res.redirect("/");
+};
+
 function JadeLoggedinMiddleware(req, res, next) {
     res.locals.loggedin = req.isAuthenticated();
 
@@ -102,5 +110,6 @@ function JadeUserMiddleware(req, res, next) {
 };
 
 exports.router = router;
+exports.MustLoggedinMiddleware = MustLoggedinMiddleware;
 exports.JadeLoggedinMiddleware = JadeLoggedinMiddleware;
 exports.JadeUserMiddleware     = JadeUserMiddleware;
