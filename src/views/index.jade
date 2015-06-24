@@ -6,6 +6,8 @@ html
         link(rel="stylesheet", href="/static/styles/main.css")
 
         block moreStyle
+            link(rel="stylesheet", href="/static/styles/showcase.css")
+            link(rel="stylesheet", href="/static/styles/forms.css")
 
     body
         header#main-header
@@ -27,8 +29,7 @@ html
                 div.flash-info= flashInfo
 
             block content
-                h1 Hello, Jade
-                p This is written from inside JADE!
+                include product/showcase.jade
 
         footer#main-footer
             aside

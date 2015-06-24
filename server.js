@@ -4,7 +4,8 @@ var express  = require("express"),
     flash    = require("connect-flash"),
     app      = express(),
     auth     = require("./src/routes/auth.js"),
-    product  = require("./src/routes/product.js");
+    product  = require("./src/routes/product.js"),
+    db       = require("./src/models/database.js");
 
 var SESSION_INFO = {
     secret: 'hasodir283471-jalnzxnfa',
@@ -30,14 +31,9 @@ app.use("*", JadeLoggedinMiddleware);
 app.use("*", JadeUserMiddleware);
 
 app.get("/", function (req, res) {
-    var message = req.flash("success");
-    if (message.length > 0) {
-        res.render("index", {
-            flashInfo: message
-        });
-    } else {
-        res.render("index");
-    }
+    var message  = req.flash("success");
+    db.GetProductList(9, 
+                      make_GetProductsIndex(req, res, message));
 });
 
 var authRoute    = auth.router,
@@ -48,3 +44,26 @@ app.use("/product", productRoute);
 var server = app.listen(3000, "localhost", function () {
     console.log("Server started!");
 });
+
+function make_GetProductsIndex (req, res, message) {
+    return function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.send(err);
+        }
+
+        var renderdata = {
+            products: []
+        };
+
+        if (message.length > 0) {
+            renderdata.flashInfo = message;
+        }
+
+        if (results.length > 0) {
+            renderdata.products = results;
+        }
+
+        res.render("index", renderdata);
+    };
+};

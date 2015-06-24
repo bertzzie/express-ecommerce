@@ -1,0 +1,18 @@
+// This template requires a variable named "products" to work.
+// The purpose of this template is to show a list of products
+// that user can purchase.
+
+div#showcase
+    each product in products
+        div.product
+            figure.product-fig
+                figcaption= product.name
+                img(src="#{product.picture}")
+            div.product-desc= product.description
+            footer
+                aside.info
+                    span.price $#{product.price}.00
+                    span.qty #{product.quantity} left in stock
+                aside.actions
+                    a.btn.btn-action(href="") Add to Cart
+
