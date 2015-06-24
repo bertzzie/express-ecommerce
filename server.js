@@ -5,6 +5,7 @@ var express  = require("express"),
     app      = express(),
     auth     = require("./src/routes/auth.js"),
     product  = require("./src/routes/product.js"),
+    cart     = require("./src/routes/cart.js"),
     db       = require("./src/models/database.js");
 
 var SESSION_INFO = {
@@ -37,9 +38,11 @@ app.get("/", function (req, res) {
 });
 
 var authRoute    = auth.router,
-    productRoute = product.router;
+    productRoute = product.router,
+    cartRoute    = cart.router;
 app.use("/auth", authRoute);
 app.use("/product", productRoute);
+app.use("/cart", cartRoute);
 
 var server = app.listen(3000, "localhost", function () {
     console.log("Server started!");

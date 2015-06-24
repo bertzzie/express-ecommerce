@@ -58,6 +58,43 @@ exports.GetProductList = function (count, callback) {
     queryDatabase(query, [limit], callback);
 };
 
+exports.GetActiveCart = function (owner_id, callback) {
+    // There can only be one (!)
+    // non-checkoutted (status: 3) cart
+    var query = "SELECT * FROM carts " + 
+                "WHERE carts.owner = ? AND carts.status != 3";
+
+    queryDatabase(query, [owner_id], callback);
+};
+
+exports.CreateCart = function (owner_id, callback) {
+    var query = "INSERT INTO carts (owner, created, status) " +
+                "VALUES (?, NOW(), 1);"; // 1 == empty cart
+
+    queryDatabase(query, [owner_id], callback);
+};
+
+exports.UpdateCartStatus = function (cart_id, new_status, callback) {
+    var query = "UPDATE carts SET carts.status = ? " +
+                "WHERE carts.id = ?";
+
+    queryDatabase(query, [new_status, cart_id], callback);
+};
+
+exports.AddItemToCart = function (cart_id, product_id, callback) {
+    var query = "INSERT INTO cartproducts (cartid, productid) " +
+                "VALUES (?, ?);";
+
+    exports.UpdateCartStatus(cart_id, 2, function (err, result) {
+        if (err) {
+            console.log(err);
+            return callback(err);
+        }
+
+        queryDatabase(query, [cart_id, product_id], callback);
+    });
+};
+
 function queryDatabase(query, data, callback) {
     pool.getConnection(function (poolError, connection) {
         if (poolError) {
@@ -66,6 +103,7 @@ function queryDatabase(query, data, callback) {
         }
 
         connection.query(query, data, function (connErr, results) {
+            connection.release();
             if (connErr) {
                 callback(connErr);
                 return;
