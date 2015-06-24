@@ -3,7 +3,8 @@ var express  = require("express"),
     passport = require("passport"),
     flash    = require("connect-flash"),
     app      = express(),
-    auth     = require("./src/routes/auth.js");
+    auth     = require("./src/routes/auth.js"),
+    product  = require("./src/routes/product.js");
 
 var SESSION_INFO = {
     secret: 'hasodir283471-jalnzxnfa',
@@ -37,8 +38,10 @@ app.get("/", function (req, res) {
     }
 });
 
-var authRoute = auth.router;
+var authRoute    = auth.router,
+    productRoute = product.router;
 app.use("/auth", authRoute);
+app.use("/product", productRoute);
 
 var server = app.listen(3000, "localhost", function () {
     console.log("Server started!");

@@ -1,0 +1,26 @@
+extends ../index.jade
+
+block moreStyle
+    link(rel="stylesheet", href="/static/styles/forms.css")
+
+block content
+    form(method="POST", action="/product/create", enctype="multipart/form-data")
+        h1 Create New Product
+        div.form-group
+            label(for="name") Product Name
+            input#name(name="name", type="text", required="required", placeholder="Awesome product")
+        div.form-group
+            label(for="picture") Product Picture
+            input#picture(name="picture", type="file", required="required")
+        div.form-group
+            label(for="quantity") Initial Quantity
+            input#quantity(name="quantity", type="number", required="required", placeholder="0")
+        div.form-group
+            label(for="price") Product Price
+            input#price(name="price", type="number", required="required", placeholder="0")
+        div.form-group
+            label(for="description") Product Description
+            textarea#description(name="description", required="required", placeholder="This is the best product in the entire universe full of great products.")
+        div.form-actions
+            input.btn.btn-reset(type="reset", value="Clear")
+            input.btn.btn-submit(type="submit", value="New Product")

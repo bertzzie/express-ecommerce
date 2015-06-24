@@ -36,6 +36,21 @@ exports.CreateUser = function (uname, passw, type, callback) {
     queryDatabase(query, [uname, hash, type], callback);
 };
 
+exports.CreateProduct = function (product, callback) {
+    var query = "INSERT INTO products (name, description, quantity, price, picture)" +
+                "VALUES (?, ?, ?, ?, ?);";
+
+    queryDatabase(query, 
+                  [
+                      product.name, 
+                      product.description, 
+                      product.quantity,
+                      product.price,
+                      product.picture
+                  ], 
+                  callback);
+};
+
 function queryDatabase(query, data, callback) {
     pool.getConnection(function (poolError, connection) {
         if (poolError) {
