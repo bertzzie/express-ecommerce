@@ -26,6 +26,15 @@ router.get("/", MustLoginMW, function (req, res) {
     });
 });
 
+router.get("/checkout", MustLoginMW, function (req, res) {
+    var owner_id = req.user.id;
+
+    db.GetActiveCart(owner_id, make_CheckoutGetActiveCart(
+                                   req, res,
+                                   owner_id
+                               ));
+});
+
 router.get("/add/:product_id", MustLoginMW, function (req, res) {
     var product_id = req.params.product_id,
         user_id    = req.user.id;
@@ -36,6 +45,26 @@ router.get("/add/:product_id", MustLoginMW, function (req, res) {
                                   user_id
                               ));
 });
+
+function make_CheckoutGetActiveCart(req, res, owner_id) {
+    return function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.redirect("/");
+        }
+
+        var cartid = results[0].id;
+        db.UpdateCartStatus(cartid, 3, function (uerr, result) {
+            if (uerr) {
+                console.log(uerr);
+                return res.redirect("/");
+            }
+
+            req.flash("success", "Cart checkout success!");
+            res.redirect("/");
+        });
+    };
+};
 
 function make_AddCartGetActiveCart(req, res, product_id, user_id) {
     return function (err, results) {
@@ -85,7 +114,7 @@ function make_AddItemToCart (req, res, product_id, user_id) {
             return res.redirect("/");
         }
 
-        req.flash("info", "New item added to cart!");
+        req.flash("success", "New item added to cart!");
         res.redirect("/");
     };
 };

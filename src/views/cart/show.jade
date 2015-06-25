@@ -2,6 +2,7 @@ extends ../index.jade
 
 block moreStyle
     link(rel="stylesheet", href="/static/styles/tables.css")
+    link(rel="stylesheet", href="/static/styles/forms.css")
 
 block content
     h2 Your Shopping Cart
@@ -26,3 +27,7 @@ block content
             tr
                 td(colspan="4") Grand Total
                 td $#{GrandTotal}.00
+
+    if CartItems.length > 0
+        p(style="text-align: right;")
+            a.btn.btn-action(href="/cart/checkout") Checkout
