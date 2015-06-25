@@ -1,4 +1,9 @@
-li.menu-item: a(href="/cart") Cart
+li.menu-item 
+    a(href="/cart")
+        span.icon-cart 
+            img(src="/static/images/cart.png")
+            !{CartCount}
+
 case user.type
     when 1
         li.menu-item: a(href="/product/create") New Product

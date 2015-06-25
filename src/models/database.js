@@ -67,6 +67,15 @@ exports.GetActiveCart = function (owner_id, callback) {
     queryDatabase(query, [owner_id], callback);
 };
 
+exports.GetActiveCartProductCount = function (owner_id, callback) {
+    var query = "SELECT COUNT(cp.productid) AS CartContentCount " +
+                "FROM carts c " +
+                "LEFT JOIN cartproducts cp ON c.id = cp.cartid " +
+                "WHERE c.owner = ? AND c.status = 2"; // 2 == filled
+
+    queryDatabase(query, [owner_id], callback);
+};
+
 exports.CreateCart = function (owner_id, callback) {
     var query = "INSERT INTO carts (owner, created, status) " +
                 "VALUES (?, NOW(), 1);"; // 1 == empty cart

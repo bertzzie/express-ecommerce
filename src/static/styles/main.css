@@ -19,6 +19,11 @@ body {
     margin: 0 12px;
 }
 
+.icon-cart img {
+    height: 12px;
+    margin-right: 3px;
+}
+
 .flash-error, .flash-info {
     padding: 8px;
     text-align: center;

@@ -72,4 +72,23 @@ function make_AddItemToCart (req, res, product_id, user_id) {
     };
 };
 
+function CartCountMiddleware(req, res, next) {
+    if (req.isAuthenticated()) {
+        var owner = req.user.id;
+        db.GetActiveCartProductCount(owner, function (err, results) {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Internal Server Error");
+            }
+
+            res.locals.CartCount = results[0].CartContentCount;
+            next();
+        });
+    } else {
+        res.locals.CartCount = 0;
+        next();
+    }
+};
+
 exports.router = router;
+exports.CartCountMiddleware = CartCountMiddleware;

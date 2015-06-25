@@ -27,9 +27,11 @@ app.set("view engine", "jade");
 app.set("views", "./src/views");
 
 var JadeLoggedinMiddleware = auth.JadeLoggedinMiddleware,
-    JadeUserMiddleware     = auth.JadeUserMiddleware;
+    JadeUserMiddleware     = auth.JadeUserMiddleware,
+    CartCountMiddleware    = cart.CartCountMiddleware;
 app.use("*", JadeLoggedinMiddleware);
 app.use("*", JadeUserMiddleware);
+app.use("*", CartCountMiddleware);
 
 app.get("/", function (req, res) {
     var message  = req.flash("success");
