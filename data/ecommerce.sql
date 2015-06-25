@@ -13,7 +13,7 @@ USE `ecommerce` ;
 -- Table `ecommerce`.`usertypes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce`.`usertypes` (
-  `id` BIGINT(11) NOT NULL,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `type` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -23,7 +23,7 @@ ENGINE = InnoDB;
 -- Table `ecommerce`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce`.`users` (
-  `id` BIGINT(11) NOT NULL,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(255) NOT NULL,
   `password` TEXT NOT NULL,
   `type` BIGINT(11) NOT NULL,
@@ -41,7 +41,7 @@ ENGINE = InnoDB;
 -- Table `ecommerce`.`products`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce`.`products` (
-  `id` BIGINT(11) NOT NULL,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
   `quantity` INT NOT NULL,
@@ -54,7 +54,7 @@ ENGINE = InnoDB;
 -- Table `ecommerce`.`cartstatus`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce`.`cartstatus` (
-  `id` BIGINT(11) NOT NULL,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -64,7 +64,7 @@ ENGINE = InnoDB;
 -- Table `ecommerce`.`carts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce`.`carts` (
-  `id` BIGINT(11) NOT NULL,
+  `id` BIGINT(11) NOT NULL AUTO_INCREMENT,
   `owner` BIGINT(11) NOT NULL,
   `created` DATETIME NOT NULL,
   `status` BIGINT(11) NOT NULL,
@@ -90,6 +90,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `ecommerce`.`cartproducts` (
   `cartid` BIGINT(11) NOT NULL,
   `productid` BIGINT(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`cartid`, `productid`),
   INDEX `PRODUCT_ID_idx` (`productid` ASC),
   CONSTRAINT `CART_ID`
@@ -104,5 +105,19 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`cartproducts` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- Default User Roles
+INSERT INTO `usertypes` (`id`, `type`)
+VALUES
+	(1,'ADMIN'),
+	(2,'USER'),
+	(3,'STAFF');
+
+-- Default Cart Status
+INSERT INTO `cartstatus` (`id`, `status`)
+VALUES
+	(1,'EMPTY'),
+	(2,'FILLED'),
+	(3,'CHECKOUT');
+
 -- Default Admin User
-INSERT INTO users (username, password, type) VALUES ('admin@mail.com’, '$2a$10$d8yU515yNMaZxHJVJM1tpOW8Sz2xqe0h3ZKmkWH7/PsnHtJFeWf/W', 1);
+INSERT INTO users (username, password, type) VALUES ('admin@mail.com', '$2a$10$d8yU515yNMaZxHJVJM1tpOW8Sz2xqe0h3ZKmkWH7/PsnHtJFeWf/W', 1);
