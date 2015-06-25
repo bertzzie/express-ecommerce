@@ -4,8 +4,26 @@ var express     = require("express"),
     auth        = require("./auth.js"),
     MustLoginMW = auth.MustLoggedinMiddleware;
 
-router.get("/", function (req, res) {
-    res.send("Hello");
+router.get("/", MustLoginMW, function (req, res) {
+    var owner_id = req.user.id;
+
+    db.GetActiveCartProduct(owner_id, function (err, results) {
+        if (err) {
+            console.log(err);
+            return res.redirect("/");
+        }
+
+        var count = results.length, grand_total = 0;
+        for (var i = 0; i < count; i++) {
+            var total   = results[i].price * results[i].quantity;
+            grand_total = grand_total + total;
+        }
+
+        res.render("cart/show", {
+            CartItems: results,
+            GrandTotal: grand_total
+        });
+    });
 });
 
 router.get("/add/:product_id", MustLoginMW, function (req, res) {

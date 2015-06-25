@@ -62,7 +62,17 @@ exports.GetActiveCart = function (owner_id, callback) {
     // There can only be one (!)
     // non-checkoutted (status: 3) cart
     var query = "SELECT * FROM carts " + 
-                "WHERE carts.owner = ? AND carts.status != 3";
+                "WHERE carts.owner = ? AND carts.status != 3;";
+
+    queryDatabase(query, [owner_id], callback);
+};
+
+exports.GetActiveCartProduct = function (owner_id, callback) {
+    var query = "SELECT p.name, p.price, cp.quantity, p.picture " +
+                "FROM carts c " +
+                "LEFT JOIN cartproducts cp ON c.id = cp.cartid " +
+                "LEFT JOIN products p ON cp.productid = p.id " +
+                "WHERE c.owner = ? AND c.status = 2;";
 
     queryDatabase(query, [owner_id], callback);
 };

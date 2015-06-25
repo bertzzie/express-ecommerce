@@ -1,0 +1,28 @@
+extends ../index.jade
+
+block moreStyle
+    link(rel="stylesheet", href="/static/styles/tables.css")
+
+block content
+    h2 Your Shopping Cart
+    table
+        thead
+            tr
+                th Product Name
+                th Picture
+                th Price
+                th Quantity
+                th Total
+        tbody
+            each item in CartItems
+                tr
+                    td= item.name
+                    td
+                        img(src="#{item.picture}")
+                    td $#{item.price}.00
+                    td= item.quantity
+                    td $#{item.price * item.quantity}.00
+        tfoot
+            tr
+                td(colspan="4") Grand Total
+                td $#{GrandTotal}.00
